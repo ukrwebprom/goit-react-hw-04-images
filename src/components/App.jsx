@@ -21,16 +21,15 @@ export function App() {
     setRequest(request);
   }
 
-  const load = async () => {
-    setLoading(true);
-    const newImg = await getImages(request, page);
-    setLoadMore(page * 12 < newImg.totalHits);
-    setError(newImg.totalHits === 0);
-    setImages(img => [...img, ...newImg.hits])
-    setLoading(false);
-  }
-
   useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const newImg = await getImages(request, page);
+      setLoadMore(page * 12 < newImg.totalHits);
+      setError(newImg.totalHits === 0);
+      setImages(img => [...img, ...newImg.hits])
+      setLoading(false);
+    }
     if(request !== '') load();
   }, [request, page])
 
