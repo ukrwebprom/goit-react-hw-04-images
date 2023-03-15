@@ -5,6 +5,7 @@ import { getImages } from "components/Utils/Pixabay";
 import { Button } from "./Button/Button";
 import { NoImagesMessage } from './NoImagesMessage/NoImagesMessage';
 import { StupidImageGallery } from "./ImageGallery/StupidImageGallery";
+import { nanoid } from 'nanoid'
 
 export function App() {
   const [request, setRequest] = useState('');
@@ -13,9 +14,11 @@ export function App() {
   const [page, setPage] = useState(1);
   const [loadMore, setLoadMore] = useState(false);
   const [error, setError] = useState(false);
+  const [reqID, setReqID] = useState(0);
   
   
   const searchFormSubmit = request => {
+    setReqID(nanoid());
     setPage(1);
     setImages([]);
     setRequest(request);
@@ -31,7 +34,7 @@ export function App() {
       setLoading(false);
     }
     if(request !== '') load();
-  }, [request, page])
+  }, [request, page, reqID])
 
   useEffect(() => {
     window.scrollTo({
